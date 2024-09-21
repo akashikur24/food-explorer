@@ -4,8 +4,9 @@ import { setSortOrder, SortOption } from "../slices/productSlice";
 import { useDispatch } from "react-redux";
 import Filter from "./Filter";
 import { X } from "lucide-react";
+import { HeaderProps } from "./Header";
 
-const Aside = ({ setIsModal }) => {
+const Aside: React.FC<HeaderProps> = ({ setIsModal }) => {
   const dispatch = useDispatch();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

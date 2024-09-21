@@ -1,6 +1,8 @@
 import { Menu } from "lucide-react";
-
-const Header = ({ setIsModal }) => {
+export interface HeaderProps {
+  setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Header: React.FC<HeaderProps> = ({ setIsModal }) => {
   return (
     <div className="w-full p-7 flex justify-between items-center bg-slate-500 ">
       <div>
