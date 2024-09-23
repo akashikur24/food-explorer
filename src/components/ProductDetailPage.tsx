@@ -24,7 +24,6 @@ const ProductDetailPage: React.FC = () => {
 
     fetchProduct();
   }, [code]);
-  console.log(product);
 
   if (!product)
     return (

@@ -1,15 +1,39 @@
 import { Link } from "react-router-dom";
-import { Product } from "../slices/productSlice";
+import { Product, removeCard, setProductCart } from "../slices/productSlice";
 import no_Image_found from "../images/no_image_found.jpg";
+import { useDispatch } from "react-redux";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const cardProduct = useSelector(
+    (state: RootState) => state.products.productCard
+  );
+  const isProductInCard = useMemo(() => {
+    return cardProduct.some((item) => item.code === product.code);
+  }, [cardProduct, product.code]);
+
+  function handleCardClick() {
+    if (isProductInCard) {
+      dispatch(removeCard(product.code));
+    } else {
+      dispatch(setProductCart(product));
+    }
+  }
+
   return (
-    <div className=" bg-white shadow-lg rounded-lg border border-gray-200 flex flex-col justify-between ">
-      <Link to={`/product/${product.code}`}>
+    <div className="h-full bg-white shadow-lg rounded-lg border border-gray-200 flex justify-between flex-col">
+      <Link
+        to={`/product/${product.code}`}
+        className=" flex flex-col justify-between"
+      >
         <div className="flex justify-center items-center">
           <img
             src={product.image_url || no_Image_found}
@@ -38,6 +62,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <p>grade : {product.nutrition_grades.toUpperCase()}</p>
         </div>
       </Link>
+      <button
+        className={`w-full  py-4 rounded-lg order-last text-white ${
+          isProductInCard ? "bg-red-500" : "bg-slate-400"
+        }`}
+        onClick={handleCardClick}
+      >
+        {isProductInCard ? "Remove from Cart" : "Add to Cart"}
+      </button>
     </div>
   );
 };

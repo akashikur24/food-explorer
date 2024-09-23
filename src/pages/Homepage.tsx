@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setProducts, sortProducts } from "../slices/productSlice";
 import ProductList from "../components/ProductList";
-import Header from "../components/Header";
 import { ScaleLoader } from "react-spinners";
-import Aside from "../components/Aside";
 import SortChange from "../components/SortChange";
 import SearchBar from "../components/SearchBar";
 import Filter from "../components/Filter";
@@ -17,7 +15,6 @@ const Homepage: React.FC = () => {
   const [debouncedQuery, setDebouncedQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [isModal, setIsModal] = useState<boolean>(false);
 
   const dispatch: AppDispatch = useDispatch();
   const searchQuery = useSelector(
@@ -103,7 +100,6 @@ const Homepage: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative">
-      <Header setIsModal={setIsModal} />
       <div className="w-full gap-x-11 flex justify-center  items-center pt-5 px-10 max-lg:hidden">
         <div>
           <SortChange />
@@ -138,7 +134,7 @@ const Homepage: React.FC = () => {
                 <button
                   onClick={nextProduct}
                   className="py-2 px-4 bg-blue-500 text-white rounded-lg"
-                  disabled={!hasMore} // Disable if no more products
+                  disabled={!hasMore}
                 >
                   Next
                 </button>
@@ -147,7 +143,6 @@ const Homepage: React.FC = () => {
           </div>
         </>
       )}
-      {isModal && <Aside setIsModal={setIsModal} />}
     </div>
   );
 };

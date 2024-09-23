@@ -18,11 +18,13 @@ interface ProductState {
   searchQuery: string;
   selectedCategory: string;
   sortOrder: SortOption;
+  productCard: Product[];
 }
 export type SortOption = "name-asc" | "name-desc" | "grade-asc" | "grade-desc";
 
 const initialState: ProductState = {
   productList: [],
+  productCard: [],
   searchQuery: "",
   selectedCategory: "all",
   sortOrder: "name-asc",
@@ -46,6 +48,15 @@ const productSlice = createSlice({
     },
     addMoreProducts: (state, action: PayloadAction<Product[]>) => {
       state.productList = [...state.productList, ...action.payload];
+    },
+    setProductCart: (state, action: PayloadAction<Product>) => {
+      state.productCard.push(action.payload);
+    },
+    removeCard: (state, action: PayloadAction<string>) => {
+      const filterCard = state.productCard.filter(
+        (item) => item.code !== action.payload
+      );
+      state.productCard = filterCard;
     },
     sortProducts: (state) => {
       if (state.sortOrder === "name-asc") {
@@ -100,6 +111,8 @@ export const {
   setSortOrder,
   addMoreProducts,
   sortProducts,
+  setProductCart,
+  removeCard,
 } = productSlice.actions;
 
 export default productSlice.reducer;
