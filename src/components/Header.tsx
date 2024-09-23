@@ -10,14 +10,16 @@ const Header: React.FC<HeaderProps> = ({ setIsModal }) => {
       <div>
         <h1 className="font-semibold text-2xl text-white">Food Explorer</h1>
       </div>
-      <div onClick={() => navigate("/productCart")}>
-        <ShoppingCart color="white" className="cursor-pointer" />
-      </div>
-      <div
-        className="hidden max-lg:block cursor-pointer"
-        onClick={() => setIsModal((prev) => !prev)}
-      >
-        <Menu color="white" />
+      <div className="flex gap-5">
+        <div onClick={() => navigate("/productCart")}>
+          <ShoppingCart color="white" className="cursor-pointer" />
+        </div>
+        <div
+          className="hidden max-lg:block cursor-pointer"
+          onClick={() => setIsModal((prev) => !prev)}
+        >
+          <Menu color="white" />
+        </div>
       </div>
     </div>
   );
